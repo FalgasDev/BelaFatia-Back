@@ -1,6 +1,5 @@
 from config.database import db
 from errors import EmptyStringError, AuthError, IdNotExist
-from datetime import datetime, timezone
 
 class Cake(db.Model):
     __tablename__ = 'cakes'
@@ -27,10 +26,10 @@ class Cake(db.Model):
 def registerCake(data):
     required_fields = ['name', 'img', 'price']
     if not all(field in data for field in required_fields):
-        raise KeyError("Os campos 'name', 'img' e 'price' são obrigatórios.")
+        raise KeyError("Algum campo está faltando.")
 
-    if not data['name'] or not data['img']:
-        raise EmptyStringError('Nome e sabor são campos obrigatórios e não podem estar vazios.')
+    if not data['name'] or not data['img'] or not data['price']:
+        raise EmptyStringError('Todos os campos tem que estar preenchidos.')
 
     if Cake.query.filter_by(name=data['name']).first():
         raise AuthError('Bolo já cadastrado com este nome.')
