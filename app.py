@@ -1,9 +1,12 @@
 from config.database import app, db
 from controllers.cake_controller import cake_blueprint
 from controllers.costumer_controller import custumer_blueprint
+from swagger.swagger_config import configure_swagger
 
 app.register_blueprint(cake_blueprint)
 app.register_blueprint(custumer_blueprint)
+
+configure_swagger(app)
 
 if __name__ == '__main__':
     with app.app_context():
